@@ -23,20 +23,20 @@ FoamFile
         type            wall;
         inGroups        1(wall);
         nFaces          299;
-        startFace       64883;
+        startFace       58903;
     }
     frontAndBack
     {
         type            empty;
         inGroups        1(empty);
-        nFaces          65182;
-        startFace       65182;
+        nFaces          59202;
+        startFace       59202;
     }
     farfield
     {
         type            patch;
         nFaces          299;
-        startFace       130364;
+        startFace       118404;
     }
 )
 

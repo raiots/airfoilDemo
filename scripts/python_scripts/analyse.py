@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 from foamlib import FoamCase
 
-pitz_tutorial = FoamCase(Path(os.environ["FOAM_TUTORIALS"]) / "incompressible/simpleFoam/pitzDaily")
+case = FoamCase(Path("../../sims"))
 
-my_pitz = pitz_tutorial.clone("myPitz")
+case.run(cmd="simpleFoam")
+# case.clean()
