@@ -23,27 +23,27 @@ FoamFile
         type            wall;
         inGroups        1(wall);
         nFaces          72;
-        startFace       14623;
+        startFace       14599;
     }
     frontAndBack
     {
         type            empty;
         inGroups        1(empty);
-        nFaces          14800;
-        startFace       14695;
+        nFaces          14774;
+        startFace       14671;
     }
     farfield
     {
         type            patch;
-        nFaces          77;
-        startFace       29495;
+        nFaces          76;
+        startFace       29445;
     }
     procBoundary1to0
     {
         type            processor;
         inGroups        1(processor);
-        nFaces          105;
-        startFace       29572;
+        nFaces          101;
+        startFace       29521;
         matchTolerance  0.0001;
         transform       unknown;
         myProcNo        1;
@@ -53,8 +53,8 @@ FoamFile
     {
         type            processor;
         inGroups        1(processor);
-        nFaces          100;
-        startFace       29677;
+        nFaces          101;
+        startFace       29622;
         matchTolerance  0.0001;
         transform       unknown;
         myProcNo        1;

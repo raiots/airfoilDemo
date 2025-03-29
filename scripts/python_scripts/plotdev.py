@@ -4,10 +4,12 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 def parse_residuals(log_file):
-    # 只存储时间步和Ux残差值
+    # 存储时间步和多种残差值
     data = {
         'step': [],
         'Ux_residual': [],
+        'Uy_residual': [],
+        'p_residual': [],
     }
     
     current_step = 0
@@ -18,16 +20,38 @@ def parse_residuals(log_file):
             if line.startswith('Time = '):
                 current_step = float(line.split('=')[1].strip())
                 
-            # 只提取Ux残差
+            # 提取Ux残差
             if 'Solving for Ux' in line:
                 match = re.search(r'Initial residual = ([0-9.e-]+)', line)
                 if match:
                     data['step'].append(current_step)
                     data['Ux_residual'].append(float(match.group(1)))
+            
+            # 提取Uy残差
+            elif 'Solving for Uy' in line:
+                match = re.search(r'Initial residual = ([0-9.e-]+)', line)
+                if match:
+                    # 确保已经有相同数量的step记录
+                    if len(data['step']) > len(data['Uy_residual']):
+                        data['Uy_residual'].append(float(match.group(1)))
+            
+            # 提取p残差
+            elif 'Solving for p' in line:
+                match = re.search(r'Initial residual = ([0-9.e-]+)', line)
+                if match:
+                    # 确保已经有相同数量的step记录
+                    if len(data['step']) > len(data['p_residual']):
+                        data['p_residual'].append(float(match.group(1)))
+
+    # 确保所有列表长度一致（补充缺失值）
+    max_len = len(data['step'])
+    for key in data:
+        if len(data[key]) < max_len:
+            data[key].extend([None] * (max_len - len(data[key])))
 
     return pd.DataFrame(data)
 
-def plot_residuals(dfs, output_filename='Ux_residual.png', labels=None):
+def plot_residuals(dfs, output_filename='Ux_residual.png', labels=None, residual_type='Ux_residual'):
     # 设置绘图风格
     sns.set_style("whitegrid")
     plt.figure(figsize=(10, 6))
@@ -40,13 +64,20 @@ def plot_residuals(dfs, output_filename='Ux_residual.png', labels=None):
     
     # 绘制每个算例的残差曲线
     for df, label in zip(dfs, labels):
-        sns.lineplot(data=df, x='step', y='Ux_residual', label=label)
+        if residual_type in df.columns:
+            sns.lineplot(data=df, x='step', y=residual_type, label=label)
     
     # 设置y轴为对数刻度
     plt.yscale('log')
     
     # 设置标题和标签
-    plt.title('Ux Residual vs Time Step')
+    title_map = {
+        'Ux_residual': 'Ux Residual vs Time Step',
+        'Uy_residual': 'Uy Residual vs Time Step',
+        'p_residual': 'p Residual vs Time Step'
+    }
+    
+    plt.title(title_map.get(residual_type, f'{residual_type} vs Time Step'))
     plt.xlabel('Time Step')
     plt.ylabel('Residual')
     

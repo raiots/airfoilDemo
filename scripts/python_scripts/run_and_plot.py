@@ -14,7 +14,8 @@ def run_mesh_commands(p3d_file):
         "cd ../../sims",
         f"plot3dToFoam ../grids/{p3d_file} -2D 1 -singleBlock -noBlank",
         "autoPatch 45 -overwrite",
-        "createPatch -overwrite"
+        "createPatch -overwrite",
+        "transformPoints -rotate-angle '((0 0 1) -10)'"
     ]
     
     combined_command = " && ".join(commands)
@@ -88,12 +89,29 @@ def main():
         from plotdev import parse_residuals, plot_residuals
         df = parse_residuals('../../sims/log.simpleFoam')
         all_residuals.append(df)
+        
+        # 为每个网格文件单独保存Ux残差图
+        plot_residuals(df, output_filename=f'Ux_residual_{base_name}.png', residual_type='Ux_residual')
     
-    # 绘制所有残差曲线到同一张图
+    # 绘制所有残差曲线到不同图中
     print("正在生成组合残差图...")
-    plot_residuals(all_residuals, output_filename='combined_residuals.png', labels=case_names)
+    # 绘制p残差图
+    plot_residuals(all_residuals, output_filename='combined_p_residuals.png', 
+                   labels=case_names, residual_type='p_residual')
     
-    print("\n所有网格文件处理完成！残差图已保存为 'combined_residuals.png'")
+    # 绘制Ux残差图 
+    plot_residuals(all_residuals, output_filename='combined_Ux_residuals.png', 
+                   labels=case_names, residual_type='Ux_residual')
+    
+    # 绘制Uy残差图
+    plot_residuals(all_residuals, output_filename='combined_Uy_residuals.png', 
+                   labels=case_names, residual_type='Uy_residual')
+    
+    print("\n所有网格文件处理完成！")
+    print("残差图已保存为:")
+    print("- 'combined_p_residuals.png'")
+    print("- 'combined_Ux_residuals.png'")
+    print("- 'combined_Uy_residuals.png'")
 
 if __name__ == "__main__":
     main() 
