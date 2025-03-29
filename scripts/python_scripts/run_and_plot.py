@@ -61,11 +61,39 @@ def main():
     
     print(f"找到以下p3d文件：{p3d_files}")
     
+    # 存储所有残差数据
+    all_residuals = []
+    case_names = []
+    
     # 处理每个p3d文件
     for p3d_file in p3d_files:
-        process_case(p3d_file)
+        # 获取不带扩展名的文件名
+        base_name = os.path.splitext(p3d_file)[0]
+        case_names.append(base_name)
+        
+        print(f"\n正在处理网格文件: {p3d_file}")
+        
+        # 1. 运行网格处理命令
+        print("正在处理网格...")
+        run_mesh_commands(p3d_file)
+        
+        # 2. 运行算例
+        print("正在运行算例...")
+        case = FoamCase(Path("../../sims"))
+        case.clean()
+        case.run()
+        
+        # 3. 收集残差数据
+        print("正在收集残差数据...")
+        from plotdev import parse_residuals, plot_residuals
+        df = parse_residuals('../../sims/log.simpleFoam')
+        all_residuals.append(df)
     
-    print("\n所有网格文件处理完成！")
+    # 绘制所有残差曲线到同一张图
+    print("正在生成组合残差图...")
+    plot_residuals(all_residuals, output_filename='combined_residuals.png', labels=case_names)
+    
+    print("\n所有网格文件处理完成！残差图已保存为 'combined_residuals.png'")
 
 if __name__ == "__main__":
     main() 

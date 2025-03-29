@@ -27,13 +27,20 @@ def parse_residuals(log_file):
 
     return pd.DataFrame(data)
 
-def plot_residuals(df, output_filename='Ux_residual.png'):
+def plot_residuals(dfs, output_filename='Ux_residual.png', labels=None):
     # 设置绘图风格
     sns.set_style("whitegrid")
     plt.figure(figsize=(10, 6))
     
-    # 只绘制Ux残差曲线
-    sns.lineplot(data=df, x='step', y='Ux_residual', label='Ux')
+    # 如果传入的是单个DataFrame，转换为列表
+    if isinstance(dfs, pd.DataFrame):
+        dfs = [dfs]
+    if labels is None:
+        labels = [f'Case {i+1}' for i in range(len(dfs))]
+    
+    # 绘制每个算例的残差曲线
+    for df, label in zip(dfs, labels):
+        sns.lineplot(data=df, x='step', y='Ux_residual', label=label)
     
     # 设置y轴为对数刻度
     plt.yscale('log')
@@ -43,9 +50,12 @@ def plot_residuals(df, output_filename='Ux_residual.png'):
     plt.xlabel('Time Step')
     plt.ylabel('Residual')
     
+    # 添加图例
+    plt.legend()
+    
     # 保存图片
     plt.savefig(output_filename, dpi=300, bbox_inches='tight')
-    plt.close()  # 关闭图形，避免内存泄漏
+    plt.close()
 
 if __name__ == '__main__':
     # 读取并解析log文件
