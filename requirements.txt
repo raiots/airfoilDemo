@@ -1,0 +1,11 @@
+aioshutil==1.5
+foamlib==0.8.7
+Jinja2==3.1.6
+markdown-it-py==3.0.0
+MarkupSafe==3.0.2
+mdurl==0.1.2
+numpy==2.2.4
+Pygments==2.19.1
+pyparsing==3.2.3
+rich==13.9.4
+typing_extensions==4.13.0
