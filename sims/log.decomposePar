@@ -8,10 +8,10 @@
 Build  : _8dbc61e11c-20241220 OPENFOAM=2412 version=v2412
 Arch   : "LSB;label=32;scalar=64"
 Exec   : decomposePar
-Date   : Mar 30 2025
-Time   : 01:17:33
+Date   : Apr 01 2025
+Time   : 14:36:11
 Host   : RaiotdeMacBook-Air.local
-PID    : 21399
+PID    : 33333
 --> FOAM Warning : 
     From Foam::fileName Foam::cwd_L()
     in file POSIX.C at line 541
@@ -52,45 +52,45 @@ Distributing points to processors
 Constructing processor meshes
 
 Processor 0
-    Number of cells = 7423
-    Number of points = 15214
-    Number of faces shared with processor 1 = 101
-    Number of faces shared with processor 2 = 113
+    Number of cells = 8553
+    Number of points = 17500
+    Number of faces shared with processor 1 = 111
+    Number of faces shared with processor 2 = 105
     Number of processor patches = 2
-    Number of processor faces = 214
-    Number of boundary faces = 14998
+    Number of processor faces = 216
+    Number of boundary faces = 17282
 
 Processor 1
-    Number of cells = 7387
-    Number of points = 15126
-    Number of faces shared with processor 0 = 101
-    Number of faces shared with processor 3 = 101
+    Number of cells = 8702
+    Number of points = 17794
+    Number of faces shared with processor 0 = 111
+    Number of faces shared with processor 3 = 107
     Number of processor patches = 2
-    Number of processor faces = 202
-    Number of boundary faces = 14922
+    Number of processor faces = 218
+    Number of boundary faces = 17574
 
 Processor 2
-    Number of cells = 7373
-    Number of points = 15112
-    Number of faces shared with processor 0 = 113
-    Number of faces shared with processor 3 = 108
+    Number of cells = 8637
+    Number of points = 17668
+    Number of faces shared with processor 0 = 105
+    Number of faces shared with processor 3 = 107
     Number of processor patches = 2
-    Number of processor faces = 221
-    Number of boundary faces = 14889
+    Number of processor faces = 212
+    Number of boundary faces = 17454
 
 Processor 3
-    Number of cells = 7418
-    Number of points = 15202
-    Number of faces shared with processor 1 = 101
-    Number of faces shared with processor 2 = 108
+    Number of cells = 8659
+    Number of points = 17706
+    Number of faces shared with processor 1 = 107
+    Number of faces shared with processor 2 = 107
     Number of processor patches = 2
-    Number of processor faces = 209
-    Number of boundary faces = 14991
+    Number of processor faces = 214
+    Number of boundary faces = 17490
 
-Number of processor faces = 423
-Max number of cells = 7423 (0.307422% above average 7400.25)
+Number of processor faces = 430
+Max number of cells = 8702 (0.743828% above average 8637.75)
 Max number of processor patches = 2 (0% above average 2)
-Max number of faces between processors = 221 (4.49173% above average 211.5)
+Max number of faces between processors = 218 (1.39535% above average 215)
 
 Time = 0
 

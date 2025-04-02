@@ -18,7 +18,7 @@ FoamFile
 
 dimensions      [0 1 -1 0 0 0 0];
 
-internalField   uniform (40 0 0);
+internalField   uniform (29.6 0 0);
 
 boundaryField
 {
@@ -33,18 +33,18 @@ boundaryField
     farfield
     {
         type            inletOutlet;
-        inletValue      uniform (40 0 0);
-        value           uniform (40 0 0);
+        inletValue      uniform (29.6 0 0);
+        value           uniform (29.6 0 0);
     }
     procBoundary1to0
     {
         type            processor;
-        value           uniform (40 0 0);
+        value           uniform (29.6 0 0);
     }
     procBoundary1to3
     {
         type            processor;
-        value           uniform (40 0 0);
+        value           uniform (29.6 0 0);
     }
 }
 

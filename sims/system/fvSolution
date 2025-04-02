@@ -63,9 +63,9 @@ relaxationFactors
 {
     equations
     {
-        U               0.7;
-        p               0.3;
-        nuTilda         0.9;
+        U 0.3;
+        p 0.3;
+        nuTilda 0.3;
     }
 }
 

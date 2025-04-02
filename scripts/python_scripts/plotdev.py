@@ -88,6 +88,81 @@ def plot_residuals(dfs, output_filename='Ux_residual.png', labels=None, residual
     plt.savefig(output_filename, dpi=300, bbox_inches='tight')
     plt.close()
 
+def parse_forces(force_file):
+    """解析力数据文件
+    
+    Args:
+        force_file (str): 力数据文件的路径
+        
+    Returns:
+        pd.DataFrame: 包含时间步、总力x、总力y数据的DataFrame
+    """
+    data = {
+        'time': [],
+        'force_x': [],
+        'force_y': []
+    }
+    
+    with open(force_file, 'r') as f:
+        for line in f:
+            # 跳过注释行
+            if line.startswith('#'):
+                continue
+            
+            # 解析数据行
+            values = line.strip().split()
+            if len(values) >= 4:  # 确保有足够的列
+                time = float(values[0])
+                force_x = float(values[1])
+                force_y = float(values[2])
+                
+                data['time'].append(time)
+                data['force_x'].append(force_x)
+                data['force_y'].append(force_y)
+    
+    return pd.DataFrame(data)
+
+def plot_forces(dfs, output_filename='forces.png', labels=None, force_type='force_x'):
+    """绘制力数据
+    
+    Args:
+        dfs: 单个DataFrame或DataFrame列表，包含力数据
+        output_filename (str): 输出图片文件名
+        labels (list): 每个数据集的标签
+        force_type (str): 要绘制的力类型 ('force_x' 或 'force_y')
+    """
+    # 设置绘图风格
+    sns.set_style("whitegrid")
+    plt.figure(figsize=(10, 6))
+    
+    # 如果传入的是单个DataFrame，转换为列表
+    if isinstance(dfs, pd.DataFrame):
+        dfs = [dfs]
+    if labels is None:
+        labels = [f'Case {i+1}' for i in range(len(dfs))]
+    
+    # 绘制每个算例的力曲线
+    for df, label in zip(dfs, labels):
+        if force_type in df.columns:
+            sns.lineplot(data=df, x='time', y=force_type, label=label)
+    
+    # 设置标题和标签
+    title_map = {
+        'force_x': '力的X分量随时间变化',
+        'force_y': '力的Y分量随时间变化'
+    }
+    
+    plt.title(title_map.get(force_type, f'{force_type} vs Time'))
+    plt.xlabel('时间 (s)')
+    plt.ylabel('力 (N)')
+    
+    # 添加图例
+    plt.legend()
+    
+    # 保存图片
+    plt.savefig(output_filename, dpi=300, bbox_inches='tight')
+    plt.close()
+
 if __name__ == '__main__':
     # 读取并解析log文件
     df = parse_residuals('sims/log.simpleFoam')

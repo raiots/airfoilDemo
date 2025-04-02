@@ -22,7 +22,7 @@ forceCoeffs
     rhoInf          1.225;       // Required when rho = rhoInf
 
 
-    magUInf         1;		// reference Speed
+    magUInf         29.6;		// reference Speed
     lRef	          1;		// reference length
     Aref	          1;		// reference Area
     
